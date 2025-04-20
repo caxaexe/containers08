@@ -2,14 +2,13 @@
 
 require_once __DIR__ . '/testframework.php';
 require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/site/modules/database.php';
-require_once __DIR__ . '/site/modules/page.php';
-
+require_once __DIR__ . '/../site/modules/database.php';
+require_once __DIR__ . '/../site/modules/page.php';
 
 $testFramework = new TestFramework();
 
 // Инициализация базы данных для тестов
-$db = new Database(DB_PATH);
+$db = new Database('/var/www/db/database.db'); // Используйте путь внутри контейнера
 
 // Выполнение SQL файла для создания структуры и данных
 $sqlContent = file_get_contents(__DIR__ . '/../sql/schema.sql');
@@ -62,7 +61,7 @@ function testDbDelete() {
 // Тесты для класса Page
 function testPageRender() {
     global $config;
-    $page = new Page(TEMPLATE_PATH);
+    $page = new Page(__DIR__ . '/../site/templates/index.tpl'); // Обновите путь к шаблону
     ob_start();
     $page->Render(['title' => 'Test Title', 'heading' => 'Test Heading', 'content' => 'Test Content']);
     $output = ob_get_clean();
