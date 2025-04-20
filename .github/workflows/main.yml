@@ -15,8 +15,8 @@ jobs:
         run: docker build -t containers08 .
       - name: Create `container`
         run: docker create --name container --volume database:/var/www/db containers08
-      - name: Copy tests to the container
-        run: docker cp ./tests container:/var/www/html
+      - name: Copy project to the container
+        run: docker cp . container:/var/www/html
       - name: Up the container
         run: docker start container
       - name: Run tests
